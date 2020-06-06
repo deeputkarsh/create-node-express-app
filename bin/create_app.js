@@ -39,9 +39,9 @@ function createApplication (name, dir) {
     dependencies: {
       cors: '~2.8.5',
       express: '~4.17.1',
-      'express-jwt': '~5.3.1',
+      'express-jwt': '~5.3.3',
       jsonwebtoken: '~8.5.1',
-      mongoose: '~5.7.7'
+      mongoose: '~5.9.18'
     },
     devDependencies: {
       '@babel/cli': '~7.10.1',
