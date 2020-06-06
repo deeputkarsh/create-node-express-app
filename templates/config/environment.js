@@ -4,7 +4,7 @@ const {
   MONGO_SSL_CA,
   MONGO_SSL_CERT,
   MONGO_SSL_KEY,
-  JWT_SECERET,
+  JWT_SECRET,
   TOKEN_VALIDITY,
   ALLOW_CORS_ORIGIN,
   ALLOW_CORS_METHODS
@@ -19,7 +19,7 @@ export const MONGO_CONFIG = {
 }
 
 export const JWT_CONFIG = {
-  SECERET: JWT_SECERET,
+  SECRET: JWT_SECRET,
   TOKEN_VALIDITY,
   NO_AUTH_PATHS: [
     new RegExp('^/api/.*'),

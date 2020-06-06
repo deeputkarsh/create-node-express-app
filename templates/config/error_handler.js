@@ -4,7 +4,6 @@ import { httpStatus } from '../constants'
 const log = debug('app:error')
 
 export const errorHandler = (err, req, res, next) => {
-  debug.enabled('app:error') || debug.enable('app:error')
   log(req.originalUrl)
   log(err)
 

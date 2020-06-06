@@ -1,0 +1,17 @@
+#!/bin/bash
+export MONGO_URI='<%- mongoUrl %>'
+export MONGO_DEBUG='<%- mongoDebug %>'
+export MONGO_SSL_CA=''
+export MONGO_SSL_CERT=''
+export MONGO_SSL_KEY=''
+
+export JWT_SECRET=''
+export TOKEN_VALIDITY=''
+
+export NODE_ENV='<%- nodeEnv %>'
+export PORT='<%- port %>'
+export ALLOW_CORS_ORIGIN=''
+export ALLOW_CORS_METHODS=''
+export DEBUG='<%- debug %>'
+
+npm run dev

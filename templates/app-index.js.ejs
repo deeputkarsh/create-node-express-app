@@ -13,7 +13,8 @@ app.use(cors(CORS_OPTIONS))
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true, parameterLimit: 50 }))
 
-app.use(jwt({ secret: JWT_CONFIG.SECERET, isRevoked: isJWTRevoked }).unless({ path: JWT_CONFIG.NO_AUTH_PATHS }))
+// uncomment to use jwt
+// app.use(jwt({ secret: JWT_CONFIG.SECRET, isRevoked: isJWTRevoked }).unless({ path: JWT_CONFIG.NO_AUTH_PATHS }))
 
 // Create MongoDB connection
 // connectMongo()
