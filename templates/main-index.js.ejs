@@ -1,0 +1,40 @@
+/*
+* Code to check if required enviroment variables are set to run the application
+*/
+
+const applicationEnvVars = ['NODE_ENV', 'PORT', 'MONGO_URI']
+
+const unusedEnvVars = applicationEnvVars.filter((i) => !process.env[i])
+
+if (unusedEnvVars.length) {
+  console.error('Required ENV variables are not set: [' + unusedEnvVars.join(', ') + ']')
+  process.exit(1)
+}
+const { PORT, NODE_ENV } = process.env
+const { app } = NODE_ENV === 'dev' ? require('./src') : require('./build/src')
+
+app.listen(PORT, _ => console.log(`<%- name %> running on port ${PORT}!`))
+app.on('error', onError)
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError (error) {
+  if (error.syscall !== 'listen') {
+    throw error
+  }
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(`Port ${PORT} requires elevated privileges`)
+      process.exit(1)
+    case 'EADDRINUSE':
+      console.error(`Port ${PORT} is already in use`)
+      process.exit(1)
+    default:
+      throw error
+  }
+}
+
+module.exports = app
