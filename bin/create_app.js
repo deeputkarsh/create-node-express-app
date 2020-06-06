@@ -39,24 +39,24 @@ function createApplication (name, dir) {
     dependencies: {
       cors: '~2.8.5',
       express: '~4.17.1',
-      'express-jwt': '~5.3.1',
+      'express-jwt': '~5.3.3',
       jsonwebtoken: '~8.5.1',
-      mongoose: '~5.7.7'
+      mongoose: '~5.9.18'
     },
     devDependencies: {
-      '@babel/cli': '~7.6.4',
-      '@babel/core': '~7.6.4',
-      '@babel/node': '~7.6.3',
-      '@babel/preset-env': '~7.6.3',
-      eslint: '~6.6.0',
-      'eslint-config-standard': '~14.1.0',
-      'eslint-plugin-import': '~2.18.2',
-      'eslint-plugin-node': '~10.0.0',
+      '@babel/cli': '~7.10.1',
+      '@babel/core': '~7.10.2',
+      '@babel/node': '~7.10.1',
+      '@babel/preset-env': '~7.10.2',
+      eslint: '~7.1.0',
+      'eslint-config-standard': '~14.1.1',
+      'eslint-plugin-import': '~2.20.2',
+      'eslint-plugin-node': '~11.1.0',
       'eslint-plugin-promise': '~4.2.1',
       'eslint-plugin-standard': '~4.0.1',
-      husky: '~3.0.9',
-      nodemon: '~1.19.4',
-      rimraf: '~3.0.0'
+      husky: '~4.2.5',
+      nodemon: '~2.0.4',
+      rimraf: '~3.0.2'
     }
   }
   // JavaScript
@@ -72,7 +72,7 @@ function createApplication (name, dir) {
   deploySample.locals.nodeEnv = ''
   deploySample.locals.port = ''
   deploySample.locals.debug = ''
-  deploy.locals.mongoUrl = 'mongodb://localhost:27017'
+  deploy.locals.mongoUrl = 'mongodb://localhost:27017/test'
   deploy.locals.mongoDebug = 'enable'
   deploy.locals.nodeEnv = 'dev'
   deploy.locals.port = '3000'
