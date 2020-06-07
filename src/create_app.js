@@ -1,10 +1,7 @@
-const path = require('path')
-const sortedObject = require('sorted-object')
-const constants = require('./constants')
-const helpers = require('./helpers')
-
-const { MODE_0755 } = constants
-const { copyTemplate, copyTemplateMulti, loadTemplate, write, mkdir, launchedFromCmd } = helpers
+import path from 'path'
+import sortedObject from 'sorted-object'
+import { MODE_0755 } from './constants'
+import { copyTemplate, copyTemplateMulti, loadTemplate, write, mkdir, launchedFromCmd } from './helpers'
 
 /**
  * Create application at the given directory.
@@ -12,7 +9,7 @@ const { copyTemplate, copyTemplateMulti, loadTemplate, write, mkdir, launchedFro
  * @param {string} name
  * @param {string} dir
  */
-function createApplication (name, dir) {
+export default function (name, dir) {
   console.log()
 
   // Package
@@ -48,7 +45,7 @@ function createApplication (name, dir) {
       '@babel/core': '~7.10.2',
       '@babel/node': '~7.10.1',
       '@babel/preset-env': '~7.10.2',
-      eslint: '~7.1.0',
+      eslint: '~7.2.0',
       'eslint-config-standard': '~14.1.1',
       'eslint-plugin-import': '~2.20.2',
       'eslint-plugin-node': '~11.1.0',
@@ -129,5 +126,3 @@ function createApplication (name, dir) {
 
   console.log()
 }
-
-module.exports = createApplication

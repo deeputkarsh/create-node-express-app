@@ -1,14 +1,11 @@
-const fs = require('fs')
-const ejs = require('ejs')
-const path = require('path')
-const util = require('util')
-const mkdirp = require('mkdirp')
-const minimatch = require('minimatch')
-const readline = require('readline')
-
-const constants = require('./constants')
-
-const { TEMPLATE_DIR, MODE_0755, MODE_0666 } = constants
+import fs from 'fs'
+import ejs from 'ejs'
+import path from 'path'
+import util from 'util'
+import mkdirp from 'mkdirp'
+import minimatch from 'minimatch'
+import readline from 'readline'
+import { TEMPLATE_DIR, MODE_0755, MODE_0666 } from './constants'
 
 var _exit = process.exit
 // Re-assign process.exit because of commander
@@ -17,7 +14,7 @@ process.exit = exit
  * Graceful exit for async STDIO
  */
 
-function exit (code) {
+export function exit (code) {
   // flush output for Node.js Windows pipe bug
   // https://github.com/joyent/node/issues/6247 is just one bug example
   // https://github.com/visionmedia/mocha/issues/333 has a good discussion
@@ -43,7 +40,7 @@ function exit (code) {
  * Install an around function; AOP.
  */
 
-function around (obj, method, fn) {
+export function around (obj, method, fn) {
   var old = obj[method]
 
   obj[method] = function () {
@@ -57,7 +54,7 @@ function around (obj, method, fn) {
  * Install a before function; AOP.
  */
 
-function before (obj, method, fn) {
+export function before (obj, method, fn) {
   var old = obj[method]
 
   obj[method] = function () {
@@ -66,7 +63,7 @@ function before (obj, method, fn) {
   }
 }
 
-function confirm (msg, callback) {
+export function confirm (msg, callback) {
   var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -84,7 +81,7 @@ function confirm (msg, callback) {
  * @param {String} pathName
  */
 
-function createAppName (pathName) {
+export function createAppName (pathName) {
   return path.basename(pathName)
     .replace(/[^A-Za-z0-9.-]+/g, '-')
     .replace(/^[-_.]+|-+$/g, '')
@@ -98,7 +95,7 @@ function createAppName (pathName) {
  * @param {Function} fn
  */
 
-function emptyDirectory (dir, fn) {
+export function emptyDirectory (dir, fn) {
   fs.readdir(dir, function (err, files) {
     if (err && err.code !== 'ENOENT') throw err
     fn(!files || !files.length)
@@ -109,7 +106,7 @@ function emptyDirectory (dir, fn) {
  * Copy file from template directory.
  */
 
-function copyTemplate (from, to) {
+export function copyTemplate (from, to) {
   write(to, fs.readFileSync(path.join(TEMPLATE_DIR, from), 'utf-8'))
 }
 
@@ -117,7 +114,7 @@ function copyTemplate (from, to) {
  * Copy multiple files from template directory.
  */
 
-function copyTemplateMulti (fromDir, toDir, nameGlob) {
+export function copyTemplateMulti (fromDir, toDir, nameGlob) {
   fs.readdirSync(path.join(TEMPLATE_DIR, fromDir))
     .filter(minimatch.filter(nameGlob, { matchBase: true }))
     .forEach(function (name) {
@@ -129,7 +126,7 @@ function copyTemplateMulti (fromDir, toDir, nameGlob) {
  * Load template file.
  */
 
-function loadTemplate (name) {
+export function loadTemplate (name) {
   var contents = fs.readFileSync(path.join(TEMPLATE_DIR, (name + '.ejs')), 'utf-8')
   var locals = Object.create(null)
 
@@ -149,7 +146,7 @@ function loadTemplate (name) {
  * @param {string} dir
  */
 
-function mkdir (base, dir) {
+export function mkdir (base, dir) {
   var loc = path.join(base, dir)
 
   console.log('   \x1b[36mcreate\x1b[0m : ' + loc + path.sep)
@@ -163,7 +160,7 @@ function mkdir (base, dir) {
  * @param {String} str
  */
 
-function write (file, str, mode) {
+export function write (file, str, mode) {
   fs.writeFileSync(file, str, { mode: mode || MODE_0666 })
   console.log('   \x1b[36mcreate\x1b[0m : ' + file)
 }
@@ -172,9 +169,7 @@ function write (file, str, mode) {
  * Determine if launched from cmd.exe
  */
 
-function launchedFromCmd () {
+export function launchedFromCmd () {
   return process.platform === 'win32' &&
     process.env._ === undefined
 }
-
-module.exports = { exit, before, around, createAppName, confirm, emptyDirectory, copyTemplate, copyTemplateMulti, loadTemplate, write, mkdir, launchedFromCmd }

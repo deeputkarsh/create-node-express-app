@@ -1,14 +1,10 @@
 #!/usr/bin/env node
 
-var path = require('path')
-var program = require('commander')
-
-const createApplication = require('./create_app')
-const constants = require('./constants')
-const helpers = require('./helpers')
-
-const { VERSION } = constants
-const { exit, around, before, confirm, emptyDirectory, createAppName } = helpers
+import path from 'path'
+import program from 'commander'
+import createApplication from './create_app'
+import { VERSION } from './constants'
+import { exit, around, before, confirm, emptyDirectory, createAppName } from './helpers'
 
 // CLI
 
@@ -51,10 +47,10 @@ if (!exit.exited) {
 
 function main () {
   // Path
-  var destinationPath = program.args.shift() || '.'
+  const destinationPath = program.args.shift() || '.'
 
   // App name
-  var appName = createAppName(path.resolve(destinationPath)) || 'hello-world'
+  const appName = createAppName(path.resolve(destinationPath)) || 'hello-world'
 
   // Generate application
   emptyDirectory(destinationPath, function (empty) {
