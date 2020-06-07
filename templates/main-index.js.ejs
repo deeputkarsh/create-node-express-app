@@ -1,8 +1,10 @@
-/*
+<% if(useEnv) { -%>
+require('dotenv').config()
+<% } -%>/*
 * Code to check if required enviroment variables are set to run the application
 */
 
-const applicationEnvVars = ['NODE_ENV', 'PORT', 'MONGO_URI']
+const applicationEnvVars = ['NODE_ENV', 'PORT'<% if(useMongoose) { %>, 'MONGO_URI'<% } %>]
 
 const unusedEnvVars = applicationEnvVars.filter((i) => !process.env[i])
 

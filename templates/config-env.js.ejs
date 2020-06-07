@@ -1,14 +1,16 @@
 const {
+<% if(useMongoose) { -%>
   MONGO_URI,
   MONGO_DEBUG,
   MONGO_SSL_CA,
   MONGO_SSL_CERT,
-  MONGO_SSL_KEY,
+  MONGO_SSL_KEY<% } if(useJwt) { %>,
   JWT_SECRET,
-  TOKEN_VALIDITY,
+  TOKEN_VALIDITY<% } if(useCors) { %>,
   ALLOW_CORS_ORIGIN,
-  ALLOW_CORS_METHODS
+  ALLOW_CORS_METHODS<% } %>
 } = process.env
+<% if(useMongoose) { -%>
 
 export const MONGO_CONFIG = {
   URI: MONGO_URI,
@@ -17,19 +19,21 @@ export const MONGO_CONFIG = {
   SSl_CERT: MONGO_SSL_CERT,
   SSl_KEY: MONGO_SSL_KEY
 }
+<% } if(useJwt) { -%>
 
 export const JWT_CONFIG = {
   SECRET: JWT_SECRET,
   TOKEN_VALIDITY,
   NO_AUTH_PATHS: [
-    new RegExp('^/api/.*'),
-    '/user/signup',
-    '/user/login'
+    '/version',
+    '/health-check'
   ]
 }
+<% } if(useCors) { -%>
 
 export const CORS_OPTIONS = ALLOW_CORS_ORIGIN === '*' ? undefined : {
   origin: ALLOW_CORS_ORIGIN.includes(',') ? ALLOW_CORS_ORIGIN.split(',') : ALLOW_CORS_ORIGIN,
   methods: ALLOW_CORS_METHODS,
   optionsSuccessStatus: 200
 }
+<% } -%>
