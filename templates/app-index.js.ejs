@@ -1,24 +1,34 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+<% if(useCors) { -%>
 import cors from 'cors'
+<% } -%>
+<% if(useJwt) { -%>
 import jwt from 'express-jwt'
+<% } -%>
 import { Routes } from './routes'
-import { errorHandler, JWT_CONFIG, CORS_OPTIONS, isJWTRevoked } from './config'
+import { errorHandler<% if(useCors) { %>, CORS_OPTIONS<% } if(useJwt) { %>, JWT_CONFIG, isJWTRevoked<% } if(useMongoose) { %>, connectMongo<% } %> } from './config'
 
 // Initiate express
 const app = express()
 
+<% if(useCors) { -%>
 app.use(cors(CORS_OPTIONS))
+<% } -%>
 // Parse incoming request body
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true, parameterLimit: 50 }))
 
+<% if(useJwt) { -%>
 // uncomment to use jwt
 // app.use(jwt({ secret: JWT_CONFIG.SECRET, isRevoked: isJWTRevoked }).unless({ path: JWT_CONFIG.NO_AUTH_PATHS }))
 
+<% } -%>
+<% if(useMongoose) { -%>
 // Create MongoDB connection
-// connectMongo()
+connectMongo()
 
+<% } -%>
 // Initiate all routes
 Routes(app)
 

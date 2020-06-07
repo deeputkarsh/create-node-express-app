@@ -38,7 +38,6 @@ const connectMongo = async () => {
   const options = {
     ...sslOptions,
     useUnifiedTopology: true,
-    autoReconnect: true,
     connectTimeoutMS: 5000,
     useNewUrlParser: true,
     useFindAndModify: false,

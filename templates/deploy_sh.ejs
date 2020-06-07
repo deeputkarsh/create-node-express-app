@@ -1,17 +1,24 @@
+<% if(!useEnv){ -%>
 #!/bin/bash
-export MONGO_URI='<%- mongoUrl %>'
-export MONGO_DEBUG='<%- mongoDebug %>'
-export MONGO_SSL_CA=''
-export MONGO_SSL_CERT=''
-export MONGO_SSL_KEY=''
-
-export JWT_SECRET=''
-export TOKEN_VALIDITY=''
-
-export NODE_ENV='<%- nodeEnv %>'
-export PORT='<%- port %>'
-export ALLOW_CORS_ORIGIN=''
-export ALLOW_CORS_METHODS=''
-export DEBUG='<%- debug %>'
-
+<% } -%>
+<% if(useMongoose){ -%>
+  <%_ if(!useEnv){ %>export <% } %>MONGO_URI='<%- mongoUrl %>'
+  <%_ if(!useEnv){ %>export <% } %>MONGO_DEBUG='<%- mongoDebug %>'
+  <%_ if(!useEnv){ %>export <% } %>MONGO_SSL_CA=''
+  <%_ if(!useEnv){ %>export <% } %>MONGO_SSL_CERT=''
+  <%_ if(!useEnv){ %>export <% } %>MONGO_SSL_KEY=''
+<% } -%>
+<% if(useJwt){ -%>
+  <%_ if(!useEnv){ %>export <% } %>JWT_SECRET=''
+  <%_ if(!useEnv){ %>export <% } %>TOKEN_VALIDITY=''
+<% } -%>
+<% if(!useEnv){ %>export <% } %>NODE_ENV='<%- nodeEnv %>'
+<% if(!useEnv){ %>export <% } %>PORT='<%- port %>'
+<% if(useCors){ -%>
+  <%_ if(!useEnv){ %>export <% } %>ALLOW_CORS_ORIGIN=''
+  <%_ if(!useEnv){ %>export <% } %>ALLOW_CORS_METHODS=''
+<% } -%>
+<% if(!useEnv){ %>export <% } %>DEBUG='<%- debug %>'
+<% if(!useEnv){ -%>
 npm run dev
+<% } -%>
