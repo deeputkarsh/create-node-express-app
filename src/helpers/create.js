@@ -37,7 +37,7 @@ export function createApplication (name, dir, configOptions) {
 
   createDirectoryStructure(dir)
   if (useJwt) {
-    copyTemplate('authentication_helper.js', path.join(dir, 'src/config/authentication_helper.js'))
+    copyTemplate('auth_helper.js', path.join(dir, 'src/config/auth_helper.js'))
   }
   if (useJwt) {
     copyTemplate('connect_mongo.js', path.join(dir, 'src/config/connect_mongo.js'))
