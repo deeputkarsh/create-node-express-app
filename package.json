@@ -1,12 +1,10 @@
 {
   "name": "create-node-express-app",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "create a new node application",
   "main": "dist/main.js",
   "scripts": {
-    "build": "rimraf dist && npm run lint && babel ./src --out-dir dist",
-    "lint": "eslint 'src/*.js'",
-    "precommit": "npm run lint",
+    "build": "rimraf dist && eslint 'src/*.js' && babel ./src --out-dir dist",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -15,6 +13,8 @@
   },
   "keywords": [
     "node",
+    "babel",
+    "ES8",
     "express",
     "boilerplate"
   ],
@@ -27,6 +27,17 @@
   "preferGlobal": true,
   "bin": {
     "create-rest-api": "./dist/main.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint . --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "commander": "^5.1.0",
@@ -46,6 +57,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
     "rimraf": "^3.0.2"
   }
 }
