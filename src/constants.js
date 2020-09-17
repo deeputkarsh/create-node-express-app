@@ -11,8 +11,8 @@ export const ASSERTION = /^y|yes|ok|true$/i
 export const DEPENDENCIES = {
   env: { dotenv: '^8.2.0' },
   cors: { cors: '^2.8.5' },
-  jwt: { 'express-jwt': '^5.3.3', jsonwebtoken: '^8.5.1' },
-  mongoose: { mongoose: '^5.9.18' }
+  jwt: { 'express-jwt': '^6.0.0', jsonwebtoken: '^8.5.1' },
+  mongoose: { mongoose: '^5.10.5' }
 }
 
 export const PKG_DEFAULT = {
@@ -45,18 +45,18 @@ export const PKG_DEFAULT = {
     express: '^4.17.1'
   },
   devDependencies: {
-    '@babel/cli': '^7.10.1',
-    '@babel/core': '^7.10.2',
-    '@babel/node': '^7.10.1',
-    '@babel/preset-env': '^7.10.2',
-    eslint: '^7.2.0',
+    '@babel/cli': '^7.11.6',
+    '@babel/core': '^7.11.6',
+    '@babel/node': '^7.10.5',
+    '@babel/preset-env': '^7.11.5',
+    eslint: '^7.9.0',
     'eslint-config-standard': '^14.1.1',
-    'eslint-plugin-import': '^2.20.2',
+    'eslint-plugin-import': '^2.22.0',
     'eslint-plugin-node': '^11.1.0',
     'eslint-plugin-promise': '^4.2.1',
     'eslint-plugin-standard': '^4.0.1',
-    husky: '^4.2.5',
-    'lint-staged': '^10.2.11',
+    husky: '^4.3.0',
+    'lint-staged': '^10.4.0',
     nodemon: '^2.0.4',
     rimraf: '^3.0.2'
   }
