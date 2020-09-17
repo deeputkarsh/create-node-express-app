@@ -1,9 +1,9 @@
-import VersionHealthRouter from './version_health'
+import HealthCheckRouter from './health_check'
 import { httpStatus } from '../constants'
 import { AppError } from '../utils'
 
 const RouteData = [
-  { path: '/', router: VersionHealthRouter }
+  { path: '/', router: HealthCheckRouter }
 ]
 
 export const Routes = (app) => {
