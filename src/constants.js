@@ -22,7 +22,7 @@ export const PKG_DEFAULT = {
   main: 'index.js',
   scripts: {
     start: 'node index.js',
-    build: 'rimraf build && npm run lint && babel ./src --out-dir build/src',
+    build: 'rimraf build && babel ./src --out-dir build/src',
     dev: 'nodemon --exec babel-node index.js',
     'dev-inspect': 'babel-node --inspect index.js'
   },
