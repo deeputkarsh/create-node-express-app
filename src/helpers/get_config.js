@@ -1,6 +1,6 @@
 import readline from 'readline'
 import { exit, createApplication } from './index'
-import { ASSERTION } from '../constants'
+import { ASSERTION, USE_OPTIONS } from '../constants'
 
 export async function startInteractivePrompt (appName, destinationPath, isDirEmpty) {
   if (!isDirEmpty) {
@@ -13,16 +13,24 @@ export async function startInteractivePrompt (appName, destinationPath, isDirEmp
   }
 
   const useDefault = await getInput('Do you want to use the default config? [y/N] ').then(response => ASSERTION.test(response))
-  if (useDefault) {
-    process.stdin.destroy()
-    return createApplication(appName, destinationPath, {})
+  const config = []
+
+  if (!useDefault) {
+    await getInput('Do you want to configure cors? [y/N] ')
+      .then(response => ASSERTION.test(response) && config.push(USE_OPTIONS.cors))
+
+    await getInput('Do you want to use jwt for authentication? [y/N] ')
+      .then(response => ASSERTION.test(response) && config.push(USE_OPTIONS.jwt))
+
+    await getInput('Do you want to use mongoose? [y/N] ')
+      .then(response => ASSERTION.test(response) && config.push(USE_OPTIONS.mongoose))
+
+    await getInput('Do you want to use the dotenv for environment variable \n    (By default a deploy.sh file will be created)? [y/N] ')
+      .then(response => ASSERTION.test(response) && config.push(USE_OPTIONS.dotenv))
   }
-  const useCors = await getInput('Do you want to configure cors? [y/N] ').then(response => ASSERTION.test(response))
-  const useJwt = await getInput('Do you want to use jwt for authentication? [y/N] ').then(response => ASSERTION.test(response))
-  const useMongoose = await getInput('Do you want to use mongoose? [y/N] ').then(response => ASSERTION.test(response))
-  const useEnv = await getInput('Do you want to use the dotenv for environment variable \n (By default a deploy.sh file will be created)? [y/N] ').then(response => ASSERTION.test(response))
+
   process.stdin.destroy()
-  return createApplication(appName, destinationPath, { useEnv, useCors, useJwt, useMongoose })
+  return createApplication(appName, destinationPath, config)
 }
 
 const getInput = (msg) => new Promise((resolve, reject) => {
@@ -30,9 +38,10 @@ const getInput = (msg) => new Promise((resolve, reject) => {
     input: process.stdin,
     output: process.stdout
   })
-
-  rl.question(msg, function (input) {
+  console.log()
+  rl.question('   ' + msg, function (input) {
     rl.close()
     resolve(input)
+    console.log()
   })
 })

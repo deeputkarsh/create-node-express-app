@@ -1,7 +1,7 @@
 import path from 'path'
 import sortedObject from 'sorted-object'
 
-import { MODE_0755, PKG_DEFAULT, DEPENDENCIES } from '../constants'
+import { MODE_0755, PKG_DEFAULT, DEPENDENCIES, USE_OPTIONS } from '../constants'
 import { copyTemplate, copyTemplateMulti, Template, write, mkdir, launchedFromCmd } from './index'
 
 /**
@@ -10,18 +10,19 @@ import { copyTemplate, copyTemplateMulti, Template, write, mkdir, launchedFromCm
  * @param {string} name
  * @param {string} dir
  */
-export function createApplication (name, dir, configOptions) {
-  const { useEnv = false, useCors = false, useJwt = false, useMongoose = false } = configOptions
+export function createApplication (name, dir, config = []) {
   console.log()
 
   // Package
   const pkg = { ...PKG_DEFAULT }
   pkg.name = name
 
-  if (useEnv) { pkg.dependencies = { ...pkg.dependencies, ...DEPENDENCIES.env } }
-  if (useCors) { pkg.dependencies = { ...pkg.dependencies, ...DEPENDENCIES.cors } }
-  if (useJwt) { pkg.dependencies = { ...pkg.dependencies, ...DEPENDENCIES.jwt } }
-  if (useMongoose) { pkg.dependencies = { ...pkg.dependencies, ...DEPENDENCIES.mongoose } }
+  const optionalDeps = config.reduce((prev, curr) => ({ ...prev, ...DEPENDENCIES[curr] }), {})
+  pkg.dependencies = { ...pkg.dependencies, ...optionalDeps }
+  const useEnv = config.includes(USE_OPTIONS.dotenv)
+  const useCors = config.includes(USE_OPTIONS.cors)
+  const useJwt = config.includes(USE_OPTIONS.jwt)
+  const useMongoose = config.includes(USE_OPTIONS.mongoose)
 
   const sampleVal = { mongoUrl: '', mongoDebug: '', nodeEnv: '', port: '', debug: '' }
   const setVal = { mongoUrl: 'mongodb://localhost:27017/test', mongoDebug: 'enable', nodeEnv: 'dev', port: '3000', debug: 'app:*' }

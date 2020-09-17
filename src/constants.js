@@ -9,11 +9,13 @@ export const VERSION = packageJson.version
 export const ASSERTION = /^y|yes|ok|true$/i
 
 export const DEPENDENCIES = {
-  env: { dotenv: '^8.2.0' },
+  dotenv: { dotenv: '^8.2.0' },
   cors: { cors: '^2.8.5' },
   jwt: { 'express-jwt': '^6.0.0', jsonwebtoken: '^8.5.1' },
   mongoose: { mongoose: '^5.10.5' }
 }
+
+export const USE_OPTIONS = Object.fromEntries(Object.keys(DEPENDENCIES).map(key => [key, key]))
 
 export const PKG_DEFAULT = {
   name: '',
