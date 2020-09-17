@@ -1,6 +1,6 @@
 {
   "name": "create-node-express-app",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "create a new express application",
   "main": "dist/main.js",
   "scripts": {
