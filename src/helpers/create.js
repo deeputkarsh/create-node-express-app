@@ -29,7 +29,8 @@ export function createApplication (name, dir, configOptions) {
   const server = new Template('main-index.js', { useEnv, useMongoose, name })
   const deploy = new Template('deploy_sh', { useEnv, useCors, useJwt, useMongoose, ...setVal })
   const deploySample = new Template('deploy_sh', { useEnv, useCors, useJwt, useMongoose, ...sampleVal })
-  const configIndex = new Template('config-index.js', { useEnv, useCors, useJwt, useMongoose })
+  const configIndex = new Template('config/index.js', { useJwt, useMongoose })
+  const configEnv = new Template('config/environment.js', { useCors, useJwt, useMongoose })
 
   if (dir !== '.') {
     mkdir(dir, '.')
@@ -37,10 +38,10 @@ export function createApplication (name, dir, configOptions) {
 
   createDirectoryStructure(dir)
   if (useJwt) {
-    copyTemplate('auth_helper.js', path.join(dir, 'src/config/auth_helper.js'))
+    copyTemplate('config/auth_helper.ejs', path.join(dir, 'src/config/auth_helper.js'))
   }
   if (useJwt) {
-    copyTemplate('connect_mongo.js', path.join(dir, 'src/config/connect_mongo.js'))
+    copyTemplate('config/connect_mongo.ejs', path.join(dir, 'src/config/connect_mongo.js'))
   }
 
   // sort dependencies like npm(1)
@@ -49,10 +50,7 @@ export function createApplication (name, dir, configOptions) {
 
   // write files
   write(path.join(dir, 'src/config/index.js'), configIndex.render())
-  if (useCors || useJwt || useMongoose) {
-    const configEnv = new Template('config-env.js', { useCors, useJwt, useMongoose })
-    write(path.join(dir, 'src/config/environment.js'), configEnv.render())
-  }
+  write(path.join(dir, 'src/config/environment.js'), configEnv.render())
   write(path.join(dir, 'src/index.js'), app.render())
   write(path.join(dir, 'package.json'), JSON.stringify(pkg, null, 2) + '\n')
   write(path.join(dir, 'index.js'), server.render(), MODE_0755)

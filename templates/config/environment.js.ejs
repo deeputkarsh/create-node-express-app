@@ -1,5 +1,7 @@
 const {
-<% if(useMongoose) { -%>
+  PORT,
+  NODE_ENV,
+  BASE_URL = ''<% if(useMongoose) { -%>,
   MONGO_URI,
   MONGO_DEBUG,
   MONGO_SSL_CA,
@@ -10,6 +12,12 @@ const {
   ALLOW_CORS_ORIGIN,
   ALLOW_CORS_METHODS<% } %>
 } = process.env
+
+export const SERVER_CONFIG = {
+  PORT,
+  NODE_ENV,
+  BASE_URL
+}
 <% if(useMongoose) { -%>
 
 export const MONGO_CONFIG = {
@@ -25,8 +33,7 @@ export const JWT_CONFIG = {
   SECRET: JWT_SECRET,
   TOKEN_VALIDITY,
   NO_AUTH_PATHS: [
-    '/version',
-    '/health-check'
+    '/health'
   ]
 }
 <% } if(useCors) { -%>
@@ -37,3 +44,21 @@ export const CORS_OPTIONS = ALLOW_CORS_ORIGIN === '*' ? undefined : {
   optionsSuccessStatus: 200
 }
 <% } -%>
+
+export const checkEnvVars = () => {
+  /*
+  * Code to check if required enviroment variables are set to run the application
+  */
+  const applicationEnvVars = [
+    'NODE_ENV',
+    'PORT'<% if(useMongoose) { -%>,
+    'MONGO_URI'<% } if(useJwt) { -%>,
+    'JWT_SECRET',
+    'TOKEN_VALIDITY'<% } %>
+  ]
+  const unusedEnvVars = applicationEnvVars.filter((i) => !process.env[i])
+  if (unusedEnvVars.length) {
+    console.error('Required ENV variables are not set: [' + unusedEnvVars.join(', ') + ']')
+    process.exit(1)
+  }
+}

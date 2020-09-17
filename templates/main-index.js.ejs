@@ -1,19 +1,13 @@
 <% if(useEnv) { -%>
 require('dotenv').config()
-<% } -%>/*
-* Code to check if required enviroment variables are set to run the application
-*/
+<% } -%>const { NODE_ENV } = process.env
+const basePath = NODE_ENV === 'production' ? './build' : '.'
+const { checkEnvVars, SERVER_CONFIG } = require(`${basePath}/src/config`)
 
-const applicationEnvVars = ['NODE_ENV', 'PORT'<% if(useMongoose) { %>, 'MONGO_URI'<% } %>]
+checkEnvVars()
 
-const unusedEnvVars = applicationEnvVars.filter((i) => !process.env[i])
-
-if (unusedEnvVars.length) {
-  console.error('Required ENV variables are not set: [' + unusedEnvVars.join(', ') + ']')
-  process.exit(1)
-}
-const { PORT, NODE_ENV } = process.env
-const { app } = NODE_ENV === 'dev' ? require('./src') : require('./build/src')
+const { PORT } = SERVER_CONFIG
+const { app } = require(`${basePath}/src`)
 
 app.listen(PORT, _ => console.log(`<%- name %> running on port ${PORT}!`))
 app.on('error', onError)
